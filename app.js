@@ -52,7 +52,6 @@ app.get("/api/posts", (req, res, next) => {
     console.log(endpoints);
 
     // axios.all allows us to make concurrent HTTP requests to the API
-    // will create an array of endpoints and then use axios.all on it
 
     // I call the all method on the axios instance, This maps through each of the items in the endpoints’ array.
     // Then, using the GET method on the Axios instance to make a request to our list of endpoints, we get each response from the server.
