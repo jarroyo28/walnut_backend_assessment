@@ -3,6 +3,10 @@ const app = express();
 const PORT = 3000;
 const axios = require("axios");
 const morgan = require("morgan");
+// A simple API response caching middleware for Express/Node using plain-english durations
+// To use simply inject the middleware into your routes
+const apicache = require("apicache");
+let cache = apicache.middleware;
 
 // Middleware for parsing
 app.use(express.json());
@@ -16,7 +20,8 @@ app.get("/api/ping", (req, res, next) => {
 });
 
 // Second route of the assessment
-app.get("/api/posts", (req, res, next) => {
+// Caching this specific route
+app.get("/api/posts", cache("30 minutes"), (req, res, next) => {
   let tags = req.query.tags;
   // sortBy and direction are optional
   let sortBy = req.query.sortBy;
