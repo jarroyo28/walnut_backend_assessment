@@ -6,7 +6,7 @@ describe("Backend Assessment - Blog Posts", () => {
     it("Should respond with a 200 Status and the correct response body", async () => {
       let response = await axios.get("http://localhost:3000/api/ping");
       expect(response.status).to.equal(200);
-      // need to use eql to compared objects
+      // need to use eql to compare objects
       expect(response.data).to.eql({ success: true });
     });
   });
@@ -47,6 +47,18 @@ describe("Backend Assessment - Blog Posts", () => {
           error: "direction parameter is invalid",
         });
       }
+    });
+
+    it("Should respond with a 200 status and the correct response body depending on the tags, sortBy and direction parameter", async () => {
+      // Will compare my api response body to the hatchways response body, if they are equal, then the response is the same
+      let hatchwaysResponse = await axios.get(
+        "https://api.hatchways.io/assessment/solution/posts?tags=history,tech&sortBy=likes&direction=desc"
+      );
+      let apiResponse = await axios.get(
+        "http://localhost:3000/api/posts?tags=history,tech&sortBy=likes&direction=desc"
+      );
+      expect(apiResponse.status).to.equal(200);
+      expect(apiResponse.data).to.eql(hatchwaysResponse.data);
     });
   });
 });

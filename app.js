@@ -44,12 +44,10 @@ app.get("/api/posts", (req, res, next) => {
     res.status(400).json({ error: "direction parameter is invalid" });
   } else {
     let listOfTags = tags.split(",");
-    console.log(listOfTags);
     // I create an array of endpoints depending on the number of tags there are
     let endpoints = listOfTags.map((tag) => {
       return `http://hatchways.io/api/assessment/blog/posts?tag=${tag}&sortBy=${sortBy}&direction=${direction}`;
     });
-    console.log(endpoints);
 
     // axios.all allows us to make concurrent HTTP requests to the API
 
@@ -76,7 +74,6 @@ app.get("/api/posts", (req, res, next) => {
           // If there is a tag for the blog, then store the blog into a variable
           if (data[i] !== undefined) {
             let blog = data[i].data.posts;
-            console.log(blog);
             // this will store the blog post onto the hash table, no duplicates will be made because we are storing them by id
             for (let i = 0; i < blog.length; i++) {
               post[blog[i].id] = blog[i];
